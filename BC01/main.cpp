@@ -9,10 +9,21 @@ int calculateEven(int num) {
     return 0;
 }
 
+int multiplyByTwo(int num) {
+    return num * 2;
+}
+
+void multiplyByReference(int& num) {
+    num *= 2;
+}
+
 int main() {
     int num = 2;
 
-    int isEven = calculateEven(num);
+    num = multiplyByTwo(num);
+    printf("%d\n", num);
 
+    multiplyByReference(num);
+    printf("%d\n", num);
     return 0;
 }

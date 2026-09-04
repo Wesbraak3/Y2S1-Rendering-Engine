@@ -18,12 +18,14 @@ void multiplyByReference(int& num) {
 }
 
 int main() {
-    int num = 2;
+    int a = 0;
+    int& b = a;
+    int* c = &b;
 
-    num = multiplyByTwo(num);
-    printf("%d\n", num);
-
-    multiplyByReference(num);
-    printf("%d\n", num);
+    printf("number: %d\n", a);
+    printf("reference: %d\n", b);
+    printf("reference address: %p\n", &b);
+    printf("pointer address: %p\n", c);
+    
     return 0;
 }

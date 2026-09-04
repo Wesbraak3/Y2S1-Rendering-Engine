@@ -1,36 +1,18 @@
 #include <cstdio>
-#include <string>
 
-typedef unsigned short int saxion_integer;
-typedef unsigned char saxion_Student;
-
-struct saxionStruct {
-    std::string name;
-    int id;
-    int age;
-};
+int calculateEven(int num) {
+    if (num % 2 == 0) {
+        printf("%d is even\n", num);
+        return 1;
+    }
+    printf("%d is odd\n", num);
+    return 0;
+}
 
 int main() {
-    printf("Hello World!\n");
+    int num = 2;
 
-    int a = 1;
-    float b = 1.0f;
-    double c = 1.0;
-    char d = '1';
-    bool e = false;
-
-    printf("variables %d %f %f %c %d \n", a, b, c, d, e);
-
-    saxion_integer f = 10;
-    printf("Saxion Integer %d\n", f);
-
-    saxionStruct g;
-    g.id = 1;
-    g.age = 5;
-    printf("My saxion struct has \n id:%d \n age:%d\n", g.id, g.age);
-
-    saxion_Student joe;
-    g.name = "joe";
+    int isEven = calculateEven(num);
 
     return 0;
 }

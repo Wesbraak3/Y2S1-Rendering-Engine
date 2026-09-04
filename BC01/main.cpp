@@ -1,12 +1,12 @@
 #include <cstdio>
-#include "excersize_01.cpp"
-#include "excersize_02.cpp"
-#include "excersize_03.cpp"
+#include "exercise_01.cpp"
+#include "exercise_02.cpp"
+#include "exercise_03.cpp"
 
 int main() {
-    // excersize_01();
-    excersize_02();
-    // excersize_03();
+    // exercise _01();
+    exercise_02();
+    // exercise_03();
 
     return 0;
 }

@@ -1,8 +1,11 @@
 #include <cstdio>
+#include <string>
 
 typedef unsigned short int saxion_integer;
+typedef unsigned char saxion_Student;
 
 struct saxionStruct {
+    std::string name;
     int id;
     int age;
 };
@@ -25,6 +28,9 @@ int main() {
     g.id = 1;
     g.age = 5;
     printf("My saxion struct has \n id:%d \n age:%d\n", g.id, g.age);
+
+    saxion_Student joe;
+    g.name = "joe";
 
     return 0;
 }

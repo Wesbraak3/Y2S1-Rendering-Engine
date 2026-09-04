@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 4.3)
+project(Y1S1_Rendering_Engine)
+
+set(CMAKE_CXX_STANDARD 20)
+
+add_executable(Y1S1_Rendering_Engine main.cpp
+        excersize_01.cpp
+        excersize_02.cpp
+        excersize_03.cpp)

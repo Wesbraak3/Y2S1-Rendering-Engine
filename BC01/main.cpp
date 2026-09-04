@@ -2,6 +2,11 @@
 
 typedef unsigned short int saxion_integer;
 
+struct saxionStruct {
+    int id;
+    int age;
+};
+
 int main() {
     printf("Hello World!\n");
 
@@ -15,6 +20,11 @@ int main() {
 
     saxion_integer f = 10;
     printf("Saxion Integer %d\n", f);
+
+    saxionStruct g;
+    g.id = 1;
+    g.age = 5;
+    printf("My saxion struct has \n id:%d \n age:%d\n", g.id, g.age);
 
     return 0;
 }

@@ -8,6 +8,6 @@ Exercise 1:
 4. Make two functions and call them in the main program: one receives a regular variable as a parameter (int P), and the other receives a pointer (int* PP). The functions should multiply the parameter by 2 and not return the result. Use the variable A from the previous questions as an argument for both functions and print the value of A using printf after each function cal
 */
 
-void excersize_02() {
+void exercise_02() {
 
 }

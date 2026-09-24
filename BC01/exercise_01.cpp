@@ -30,7 +30,7 @@ void printSum(int a, int b, int c, int d) {
     printf("The sum is %d\n", a + b + c + d);
 }
 
-void excersize_01() {
+void run_01() {
     int a = 1;
     int b = 2;
     int c = 3;

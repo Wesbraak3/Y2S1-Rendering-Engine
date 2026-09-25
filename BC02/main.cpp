@@ -1,33 +1,21 @@
 #include <cstdio>
 
-class SimpleClass {
-    public:
-        int simpleValue;
-        SimpleClass();
-        ~SimpleClass();
-};
-
-SimpleClass::SimpleClass() {
-    simpleValue = 0;
-    printf("SimpleClass was created\n");
-}
-
-SimpleClass::~SimpleClass() {
-    printf("SimpleClass was destroyed with value: %d\n", simpleValue);
-}
-
 int main() {
-    {
-        SimpleClass cl1;
-        cl1.simpleValue = 10;
-        printf("SimpleClass was created with value %d\n", cl1.simpleValue);
-    }
+    Vector2 a (1,2);
+    Vector2 *pA = &a;
+    printf("%f\n", pA->x);
+    Vector2 &Ra = a;
+    printf("%f\n", Ra.x);
 
-    SimpleClass* sl2 = new SimpleClass();
-    sl2->simpleValue = 20;
-    delete sl2;
+    a.x = 12;
+    printf("%f\n", pA->x);
+    printf("%f\n", a.x);
 
-    printf("Program Ended");
+    rA.x =13;
+    printf("%f\n", pA->x);
+    printf("%f\n", a.x);
+
+    Vector2 b (2,2);
 
     return 0;
 }

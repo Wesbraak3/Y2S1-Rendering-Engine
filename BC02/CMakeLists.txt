@@ -3,4 +3,6 @@ project(BC02)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(BC02 main.cpp)
+add_executable(BC02 main.cpp
+        Student.cpp
+        Student.h)

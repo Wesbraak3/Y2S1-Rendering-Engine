@@ -27,5 +27,7 @@ int main() {
     sl2->simpleValue = 20;
     delete sl2;
 
+    printf("Program Ended");
+
     return 0;
 }

@@ -2,6 +2,8 @@
 #include <string>
 typedef std::string string;
 
+#include<vector>
+
 /*  Exercise parameters
 1. Create a struct named Student with the following members: name (string), studyNumber (int), modulesLen (int), modules (string* array)
 2. Implement the following functionalities:
@@ -13,7 +15,33 @@ typedef std::string string;
 4. Create an array of Student objects in your main function and fill them with values (choose your own). Create a Student pointer SP variable and use it to point to the 1st Student object in the array. Do the same tasks as question 3 with SP. Afterwards, create a Student reference SR variable and use it to point to the 2nd Student object in the array. Repeat the same operations that you have done with SP, but now with SR.
 */
 
-int main() {
+struct Student {
+    string name;
+    int studentNumber;
+    int moduleLen;
+    string *modules[];
 
+    Student(string name, int studentNumber);
+    ~Student();
+};
+Student::Student(string name, int studentNumber) {
+    this->name = name;
+    this->studentNumber = studentNumber;
+}
+Student::~Student() = default;
+
+int main() {
+    std::vector<Student> students;
+    students.push_back(Student("John", 1));
+    students.push_back(Student("John", 2));
+    students.push_back(Student("John", 3));
+    students.push_back(Student("John", 4));
+
+    
+
+    Student *student = new Student("Wes", 567849);
+    printf("StudentName: %s\n StudentNumber: %d", student->name.c_str(), student->studentNumber);
+
+    delete student;
     return 0;
 }

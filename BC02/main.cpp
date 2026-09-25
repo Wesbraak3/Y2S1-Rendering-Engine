@@ -13,6 +13,22 @@ typedef std::string string;
 4. Create an array of Student objects in your main function and fill them with values (choose your own). Create a Student pointer SP variable and use it to point to the 1st Student object in the array. Do the same tasks as question 3 with SP. Afterwards, create a Student reference SR variable and use it to point to the 2nd Student object in the array. Repeat the same operations that you have done with SP, but now with SR.
 */
 
+struct Students {
+public:
+    string name;
+    int StudentNumber;
+
+    Students(string name, int StudentNumber);
+    ~Students();
+};
+
+Students::Students(string name, int StudentNumber) {
+    this->name = name;
+    this->StudentNumber = StudentNumber;
+}
+
+Students::~Students() = default;
+
 int main() {
 
     return 0;

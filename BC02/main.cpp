@@ -3,7 +3,6 @@
 #include <string>
 typedef std::string string;
 
-
 /*  Exercise parameters
 1. Create a struct named Student with the following members: name (string), studyNumber (int), modulesLen (int), modules (string* array)
 2. Implement the following functionalities:

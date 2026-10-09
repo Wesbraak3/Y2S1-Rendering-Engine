@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "core/mesh.h"
 #include "core/assimpLoader.h"
+#include "core/Camera.h"
 #include "core/texture.h"
 
 //#define MAC_CLION
@@ -28,6 +29,17 @@
 
 int g_width = 800;
 int g_height = 600;
+
+static core::Camera g_camera(
+    glm::vec3(0.0f, 0.0f, 10.0f),
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    45.0f,
+    0.1f,
+    100.0f,
+    g_width,
+    g_height
+    );
 
 void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -151,17 +163,6 @@ int main() {
     glClearColor(clearColor.r,
                  clearColor.g, clearColor.b, clearColor.a);
 
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
-    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
-    //VP
-    glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(g_width) / static_cast<float>(g_height), 0.1f, 100.0f);
-
     GLint mvpMatrixUniform = glGetUniformLocation(modelShaderProgram, "mvpMatrix");
     GLint textureModelUniform = glGetUniformLocation(textureShaderProgram, "mvpMatrix");
     GLint textureUniform = glGetUniformLocation(textureShaderProgram, "text");
@@ -173,18 +174,11 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Begin("Raw Engine v2");
-        ImGui::Text("Hello :)");
-        ImGui::End();
-
         processInput(window);
         suzanne.rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
 
         glUseProgram(textureShaderProgram);
-        glUniformMatrix4fv(textureModelUniform, 1, GL_FALSE, glm::value_ptr(projection * view * quadModel.getModelMatrix()));
+        glUniformMatrix4fv(textureModelUniform, 1, GL_FALSE, glm::value_ptr(g_camera.GetPVMatrix() * quadModel.getModelMatrix()));
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(textureUniform, 0);
         glBindTexture(GL_TEXTURE_2D, cmgtGatoTexture.getId());
@@ -193,9 +187,20 @@ int main() {
         glActiveTexture(GL_TEXTURE0);
 
         glUseProgram(modelShaderProgram);
-        glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(projection * view * suzanne.getModelMatrix()));
+        glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(g_camera.GetPVMatrix() * suzanne.getModelMatrix()));
         suzanne.render();
         glBindVertexArray(0);
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::Begin("Raw Engine v2");
+        ImGui::Text("Hello :)");
+        ImGui::Text("Hello :)");
+        if (ImGui::Button("Hello :)", ImVec2(200, 80))) {
+            printf("Click ...\n");
+        };
+        ImGui::End();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

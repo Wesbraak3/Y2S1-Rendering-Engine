@@ -13,7 +13,7 @@ namespace core {
     public:
         Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 ,float viewAngle, float near, float far, int width, int height);
 
-        void Translate(glm::vec3 transform);
+        void Translate(glm::vec3 direction, float speed);
 
         glm::mat4 GetViewMatrix() const;
         glm::mat4 GetProjectionMatrix() const;
@@ -23,7 +23,6 @@ namespace core {
         glm::vec3 cameraPos;
         glm::vec3 cameraTarget;
         glm::vec3 cameraUp;
-
 
         float aspectRatio;
 

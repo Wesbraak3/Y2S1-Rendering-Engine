@@ -30,20 +30,48 @@
 int g_width = 800;
 int g_height = 600;
 
+float g_near = 0.1f;
+float g_far = 100.0f;
+float g_fov = 45.0f;
+
+float g_cameraSpeed = 5.0f;
+
 static core::Camera g_camera(
     glm::vec3(0.0f, 0.0f, 10.0f),
     glm::vec3(0.0f, 0.0f, 0.0f),
     glm::vec3(0.0f, 1.0f, 0.0f),
-    45.0f,
-    0.1f,
-    100.0f,
+    g_fov,
+    g_near,
+    g_far,
     g_width,
     g_height
     );
 
+GLenum drawMode = GL_TRIANGLES;
+
+void ImGuiLogic() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    ImGui::Begin("My Engine");
+    ImGui::Text("Hello :)");
+
+    if (ImGui::Button("view triangles", ImVec2(100, 40))) {
+        drawMode = GL_TRIANGLES;
+    };
+    if (ImGui::Button("view lines", ImVec2(100, 40))) {
+        drawMode = GL_LINES;
+    };
+    ImGui::End();
+}
+
 void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        g_camera.Translate(glm::vec3 (1,0,0), g_cameraSpeed);
+    }
 }
 
 void framebufferSizeCallback(GLFWwindow *window,
@@ -128,6 +156,8 @@ int main() {
 
     int success;
     char infoLog[512];
+
+
     const unsigned int modelShaderProgram = glCreateProgram();
     glAttachShader(modelShaderProgram, modelVertexShader);
     glAttachShader(modelShaderProgram, fragmentShader);
@@ -137,6 +167,8 @@ int main() {
         glGetProgramInfoLog(modelShaderProgram, 512, NULL, infoLog);
         printf("Error! Making Shader Program: %s\n", infoLog);
     }
+
+
     const unsigned int textureShaderProgram = glCreateProgram();
     glAttachShader(textureShaderProgram, modelVertexShader);
     glAttachShader(textureShaderProgram, textureShader);
@@ -171,36 +203,30 @@ int main() {
     double finishFrameTime = 0.0;
     float deltaTime = 0.0f;
     float rotationStrength = 100.0f;
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        ImGuiLogic();
         processInput(window);
+
         suzanne.rotate(glm::vec3(0.0f, 1.0f, 0.0f), glm::radians(rotationStrength) * static_cast<float>(deltaTime));
 
+        // Load Texture on a quad
         glUseProgram(textureShaderProgram);
         glUniformMatrix4fv(textureModelUniform, 1, GL_FALSE, glm::value_ptr(g_camera.GetPVMatrix() * quadModel.getModelMatrix()));
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(textureUniform, 0);
         glBindTexture(GL_TEXTURE_2D, cmgtGatoTexture.getId());
-        quadModel.render();
+        quadModel.render(drawMode);
         glBindVertexArray(0);
         glActiveTexture(GL_TEXTURE0);
 
+        // Load 3D model
         glUseProgram(modelShaderProgram);
         glUniformMatrix4fv(mvpMatrixUniform, 1, GL_FALSE, glm::value_ptr(g_camera.GetPVMatrix() * suzanne.getModelMatrix()));
-        suzanne.render();
+        suzanne.render(drawMode);
         glBindVertexArray(0);
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Begin("Raw Engine v2");
-        ImGui::Text("Hello :)");
-        ImGui::Text("Hello :)");
-        if (ImGui::Button("Hello :)", ImVec2(200, 80))) {
-            printf("Click ...\n");
-        };
-        ImGui::End();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

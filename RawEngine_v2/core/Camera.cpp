@@ -23,8 +23,17 @@ namespace core {
         this->PVMatrix = projection * view;
     }
 
-    void Camera::Translate(glm::vec3 transform) {
+    void Camera::Translate(glm::vec3 direction, float speed) {
 
+    }
+
+    void Camera::CalculateTransform() {
+
+    }
+    void Camera::CalculatePVMatrix(/*viewAngle, cameraTarget, cameraUp*/) {
+        // this->view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+        // this->projection = glm::perspective(glm::radians(viewAngle), static_cast<float>(width) / static_cast<float>(height), near, far);
+        // this->PVMatrix = projection * view;
     }
 
     glm::mat4 Camera::GetViewMatrix() const {
@@ -35,14 +44,5 @@ namespace core {
     }
     glm::mat4 Camera::GetPVMatrix() const {
         return PVMatrix;
-    }
-
-    void Camera::CalculateTransform() {
-
-    }
-    void Camera::CalculatePVMatrix(/*viewAngle, cameraTarget, cameraUp*/) {
-        // this->view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
-        // this->projection = glm::perspective(glm::radians(viewAngle), static_cast<float>(width) / static_cast<float>(height), near, far);
-        // this->PVMatrix = projection * view;
     }
 }
